@@ -1,0 +1,12 @@
+Effects on PID components
+-------------------------
+P - P control how large the steering angle is to correct for the CTE.Too small, the car will not move back toward the lane center quick enough. Too high, the car will overshoot which will bring our discussion to D component.
+
+D - D is introduced to alleviate overshooting. When the car is approaching lane center (CTE approaching zero), the D term multiply with the time derivative of CTE will produce value that is opposite of multiplicaiton of D term which act to counter the effect of D. In other words, it will reduce the magnitude of steering angle to smoothen overshooting. However, if D is set too high, the multiplication will produce high value when CTE is already close to zero. This will give high steering angle and result in the car to be turning its wheels left and right in the middle of the lane.
+
+I - is to correct for the wheel drift which should be a small value. On the other hand, since I multiplies with the integral of CTE, and its value is large in the beginning of PID calibration and it will result in very large value causing the car to swirl. Therefore, together with the fact that the physical drift is small, the I should be initialized to small value when starting twiddle algorithm.
+
+
+Twiddle 
+------------------------
+I implemented the twiddle algorithm from the lesson with simple state chart where twiddle_i represent the P,I or D component to adjust for. The state changes based on twiddle_i and CTE value. I also use variable 'interation' to ensure that the calibration doesn't stop too soon. With trial and error (reasons given in the aforementioned reflection), I intialized P,I and D to 1, 0.01 and 10.0 respectively. When starting the the simulator from fresh, the calibration should complete before reaching the bridge and final P,I,D values should be around 4.0, 0.06, 13.0. 
