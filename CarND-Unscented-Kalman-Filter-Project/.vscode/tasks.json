@@ -1,0 +1,44 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "0.1.0",
+    "command": "sh",
+    "isShellCommand": true,
+    "args": ["-c"],
+    "showOutput": "always",
+    "suppressTaskName": true,
+    "options":{
+        "cwd":"${workspaceRoot}/build"
+    },
+    "tasks":[
+        {
+            "taskName": "cmake",
+            "args": ["cmake .."                
+            ]
+        },
+        {
+            "taskName": "make",
+            "args": [
+                "make -j8"
+            ],
+            "isBuildCommand": true
+        },
+        {
+            "taskName": "run",
+            "args": [
+                "./UnscentedKF ../data/sample-laser-radar-measurement-data-1.txt ../result/output1.txt"
+            ],
+            "isTestCommand": true
+            
+        },
+        {
+            "taskName": "run2",
+            "args": [
+                "./UnscentedKF ../data/sample-laser-radar-measurement-data-2.txt ../result/output2.txt"
+            ],
+            "isTestCommand": true
+            
+        }        
+
+    ]
+}
